@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.java.mybatis.BookDAO">
+	<insert id="insert" parameterType="BookDTO">
+		insert into tbl_books(book_code, book_name, book_comp, book_writer, book_price)
+		values( 'B' || LPAD(SEQ_BOOKS.NEXTVAL,4,0), #{book_name}, #{book_comp}, #{book_writer}, #{book_price} )
+	</insert>
+
+	<select id="selectAll" resultType="BookDTO" parameterType="BookDTO">
+		select * from tbl_books
+	</select>
+	
+	<select id="findById" resultType="BookDTO" parameterType="java.lang.String">
+		select * from tbl_books where book_code = #{book_code}
+	</select>
+	
+	<select id="findById" resultType="BookDTO" parameterType="java.lang.String">
+		select * from tbl_books where book_name = #{book_name}
+	</select>
+
+	<update id="update">
+		update tbl_books set
+			BOOK_NAME = #{book_name},
+			BOOK_COMP = #{book_comp},
+			BOOK_WRITER = #{book_writer},
+			BOOK_PRICE = #{book_price}
+		where BOOK_CODE = #{book_code}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_books where = #{book_code}
+	</delete>
+</mapper>

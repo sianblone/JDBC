@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.biz.dbms.dao.BBsDao">
+	<select id="selectAll" resultType="BBsDTO">
+		select * from tbl_bbs
+	</select>
+	<select id="findByNum" resultType="BBsDTO">
+		select * from tbl_bbs where bbs_num = #{bbs_num}
+	</select>
+	<insert id="insert">
+		insert into tbl_bbs(bbs_num, bbs_sub, bbs_cont, bbs_user, bbs_date, bbs_time)
+		values(seq_bbs.nextval, #{bbs_sub}, #{bbs_cont}, #{bbs_user}, #{bbs_date}, #{bbs_time})
+	</insert>
+	<update id="update">
+		update tbl_bbs
+		set bbs_sub = #{bbs_sub}, bbs_cont = #{bbs_cont}, bbs_user = #{bbs_user}
+		where bbs_num = #{bbs_num}
+		
+	</update>
+	<delete id="delete">
+		delete from tbl_bbs where bbs_num = #{bbs_num}
+	</delete>
+	
+</mapper>

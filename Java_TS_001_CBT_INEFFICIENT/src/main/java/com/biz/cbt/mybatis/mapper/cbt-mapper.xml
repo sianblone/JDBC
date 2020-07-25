@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.biz.cbt.mybatis.dao.CbtDao">
+	<select id="findBySeq" resultType="CbtDTO">
+		select * from tbl_cbt where CB_SEQ = #{cb_seq}
+	</select>
+	
+	<select id="selectAll" resultType="CbtDTO">
+		select * from tbl_cbt
+	</select>
+	
+	<select id="selectAllQCode" resultType="String">
+		select cb_qcode from tbl_cbt group by cb_qcode
+	</select>
+	
+	<select id="findByQCodeForSeq" resultType="String">
+		SELECT CB_SEQ FROM TBL_CBT WHERE CB_QCODE = #{cb_qcode} ORDER BY CB_SEQ
+	</select>
+	
+	<select id="findByJoinQCode" resultType="CbtDTO">
+		SELECT CB_SEQ, CB_QCODE, CB_SELECT, CB_ANS
+		from ( 
+			SELECT CB_SEQ, CB_QCODE, CB_SELECT, CB_ANS
+			FROM TBL_CBT, TBL_QST
+			WHERE CB_QCODE = Q_CODE
+			)
+		where CB_QCODE = #{cb_qcode}
+	</select>
+	
+	<insert id="insert">
+		insert into tbl_cbt(CB_SEQ, CB_QCODE, CB_SELECT, CB_ANS)
+		values('S' || LPAD(seq_cbt.nextval,5,0), #{cb_qcode}, #{cb_select}, #{cb_ans, jdbcType=VARCHAR} )
+	</insert>
+	
+	<update id="update">
+		update tbl_cbt set
+			cb_qcode = #{cb_qcode},
+			cb_select = #{cb_select},
+			cb_ans = #{cb_ans}
+		where cb_seq = #{cb_seq}
+	</update>
+	
+	<delete id="deleteBySeq">
+		 delete from tbl_cbt
+		 where cb_seq = #{cb_seq}
+	</delete>
+	
+	<delete id="deleteByQCode">
+		 delete from tbl_cbt
+		 where cb_qcode = #{cb_qcode}
+	</delete>
+
+</mapper>

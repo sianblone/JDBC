@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.biz.cbt.mybatis.dao.QstDao">
+
+	<select id="findByQCode" resultType="QstDTO">
+		select * from tbl_qst where q_code = #{q_code}
+	</select>
+	
+	<select id="selectAll" resultType="QstDTO">
+		select * from tbl_qst
+	</select>
+	
+	<insert id="insert" parameterType="QstDTO">
+		<selectKey keyProperty="q_code" order="BEFORE" resultType="String">
+			select 'Q' || LPAD(seq_qst.nextval,5,0) from dual
+		</selectKey>
+		insert into tbl_qst(q_code, q_qst)
+		values(#{q_code}, #{q_qst} )
+	</insert>
+	
+	<update id="update">
+		update tbl_qst set
+			q_qst = #{q_qst}
+		where q_code = #{q_code}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_qst
+		where q_code = #{q_code}
+	</delete>
+
+</mapper>
